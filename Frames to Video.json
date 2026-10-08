@@ -1,0 +1,147 @@
+{
+  "prompt": "Create a photorealistic frames-to-video transformation where the car in Frame 1 mechanically evolves into the car in Frame 2 while continuously driving forward at approximately 100 km/h. The vehicle must remain in uninterrupted forward motion throughout the entire transformation. The highway environment must remain the SAME continuous physical environment from the first frame to the last frame. The background must move naturally as the vehicle travels forward, but it must never fade, dissolve, crossfade, switch, regenerate, jump, or transform into a different environment.",
+
+  "driving_motion": {
+    "speed": "Approximately 100 km/h",
+    "direction": "Continuous forward driving",
+    "vehicle_motion": "The car continuously travels forward throughout the entire video without stopping, slowing down, reversing, teleporting, or becoming stationary",
+    "wheel_rotation": "Continuous realistic wheel rotation synchronized with approximately 100 km/h",
+    "tire_behavior": "Realistic tire-road contact and rolling motion",
+    "suspension": "Natural suspension movement caused by continuous highway driving",
+    "body_motion": "Subtle realistic vibration and aerodynamic movement caused by high-speed driving"
+  },
+
+  "background_continuity": {
+    "core_rule": "The background is one single continuous real-world highway environment from Frame 1 through Frame 2.",
+    "environment": "Clean open highway road with smooth asphalt, subtle lane markings, distant greenery on both sides, and a clear daylight sky.",
+    "continuous_motion": "Because the car is traveling at approximately 100 km/h, the road surface, lane markings, roadside greenery, and surrounding environment must continuously move naturally relative to the camera and vehicle.",
+    "perspective_motion": "Use realistic forward-driving perspective: nearby road texture and lane markings move faster through the frame while distant scenery moves more slowly, creating authentic depth and parallax.",
+    "road_motion": "The asphalt and lane markings continuously flow backward beneath and around the moving vehicle with realistic high-speed perspective.",
+    "side_environment_motion": "Roadside greenery continuously passes naturally from foreground toward background without changing identity or appearance.",
+    "distant_background": "The distant horizon and sky remain visually stable and consistent while showing only natural perspective movement caused by forward driving.",
+    "lighting_continuity": "Sun position, daylight intensity, reflections, shadows, color temperature, and atmospheric conditions remain exactly consistent from beginning to end."
+  },
+
+  "background_prohibitions": {
+    "no_background_fade": true,
+    "no_background_crossfade": true,
+    "no_background_dissolve": true,
+    "no_background_transition": true,
+    "no_environment_swap": true,
+    "no_scene_change": true,
+    "no_location_change": true,
+    "no_horizon_jump": true,
+    "no_random_background_generation": true,
+    "no_background_regeneration": true,
+    "no_background_warping": true,
+    "no_background_morphing": true,
+    "no_background_zoom": true,
+    "no_background_blur_transition": true,
+    "no_color_shift": true,
+    "no_weather_change": true,
+    "no_time_of_day_change": true
+  },
+
+  "camera": {
+    "angle": "Fixed low front three-quarter automotive camera angle",
+    "camera_position": "Locked to the same relative position and perspective throughout the entire video",
+    "camera_movement": "No independent camera movement",
+    "camera_shake": "No artificial camera shake",
+    "zoom": "No zoom",
+    "framing": "Identical framing and composition from beginning to end",
+    "lens": "Maintain the same focal length and perspective throughout",
+    "tracking_behavior": "The camera may maintain the vehicle in the same overall frame position while the highway environment naturally moves behind and beneath the vehicle due to continuous forward travel."
+  },
+
+  "mechanical_transformation": {
+    "style": "High-end photorealistic Transformers-style mechanical automotive evolution",
+    "principle": "The transformation must be physical, mechanical, engineered, and continuous rather than a digital morph.",
+    "chassis": "Chassis components mechanically extend, retract, reposition, and restructure.",
+    "axles": "Axles physically reposition into the correct geometry of Frame 2.",
+    "suspension": "Suspension components mechanically adjust their geometry and ride height.",
+    "wheels": "Wheels mechanically change diameter and width according to Frame 2 while continuously rotating.",
+    "tires": "Tires physically reform into the correct size, sidewall proportions, width, and tread configuration.",
+    "body_panels": "Body panels unlock, detach, slide, rotate, fold, expand, and reconnect.",
+    "hood": "The hood mechanically changes length, shape, and structural geometry.",
+    "fenders": "Fenders mechanically reshape and reposition.",
+    "doors": "Doors physically restructure and align with the new body configuration.",
+    "roof": "The roofline and cabin volume progressively evolve toward Frame 2.",
+    "grille": "The grille mechanically reconstructs piece by piece.",
+    "headlights": "Headlight assemblies physically reposition and transform into the design of Frame 2.",
+    "materials": "Metal, glass, rubber, paint, chrome, and modern finishes transition through believable physical component changes."
+  },
+
+  "transformation_physics": {
+    "continuous": true,
+    "visible_intermediate_stages": true,
+    "mechanical_inertia": true,
+    "realistic_component_weight": true,
+    "realistic_collision_avoidance": true,
+    "realistic_component_alignment": true,
+    "realistic_locks_and_connections": true,
+    "vehicle_remains_grounded": true,
+    "vehicle_keeps_moving_during_transformation": true,
+    "wheel_rotation_continues_during_transformation": true,
+    "road_contact_continues_during_transformation": true
+  },
+
+  "forbidden_transformation_effects": {
+    "no_fade": true,
+    "no_dissolve": true,
+    "no_liquid_morphing": true,
+    "no_melting": true,
+    "no_soft_morphing": true,
+    "no_instant_model_swap": true,
+    "no_teleportation": true,
+    "no_shape_popping": true,
+    "no_glowing_parts": true,
+    "no_energy_effects": true,
+    "no_particles": true,
+    "no_magic_effects": true,
+    "no_unrealistic_deformation": true
+  },
+
+  "timeline": {
+    "start": "Begin exactly matching Frame 1. The Frame 1 car is already driving forward at approximately 100 km/h on the highway.",
+    
+    "phase_1": "The car continues driving normally while the first mechanical components begin unlocking and repositioning. The highway background continuously moves naturally due to forward motion.",
+    
+    "phase_2": "Major chassis, suspension, axle, wheel, tire, hood, fender, door, and body structures mechanically reorganize while the car continues driving at approximately 100 km/h.",
+    
+    "phase_3": "The cabin, roofline, grille, headlights, body panels, and remaining components progressively restructure into the geometry of Frame 2. All components remain physically connected and mechanically believable.",
+    
+    "phase_4": "Final components lock into place while the vehicle continues driving forward. The background continues the exact same uninterrupted highway motion with no scene transition.",
+    
+    "end": "End exactly matching Frame 2 while the transformed car is still traveling forward at approximately 100 km/h on the same continuous highway environment."
+  },
+
+  "visual_consistency": {
+    "road": "Same road throughout",
+    "lane_markings": "Same lane markings throughout",
+    "greenery": "Same surrounding vegetation and landscape throughout",
+    "sky": "Same sky throughout",
+    "lighting": "Same daylight throughout",
+    "shadows": "Consistent physically accurate shadows throughout",
+    "reflections": "Consistent realistic vehicle reflections throughout",
+    "environment_identity": "The environment must remain one continuous location and must never appear replaced or regenerated."
+  },
+
+  "motion_relationship": {
+    "vehicle": "Moves continuously forward at approximately 100 km/h",
+    "road": "Moves naturally backward relative to the vehicle and camera perspective",
+    "nearby_objects": "Pass through the frame faster due to perspective",
+    "distant_objects": "Move more slowly due to depth and distance",
+    "horizon": "Remains stable and consistent",
+    "camera": "Remains locked to the same automotive perspective",
+    "transformation": "Occurs entirely during continuous driving motion"
+  },
+
+  "quality": {
+    "style": "Ultra-photorealistic cinematic automotive VFX",
+    "detail": "Extremely detailed mechanical components, realistic metal, paint, glass, rubber, reflections, shadows, and road interaction",
+    "motion_quality": "Smooth physically believable continuous motion",
+    "final_look": "Premium high-end automotive commercial and Hollywood-quality mechanical VFX"
+  },
+
+  "absolute_final_rule": "The most important requirement is CONTINUOUS ENVIRONMENTAL MOTION WITHOUT ENVIRONMENT CHANGE. The highway background must continuously move naturally because the car is traveling at approximately 100 km/h, while remaining the exact same physical location. NEVER fade, dissolve, crossfade, regenerate, replace, morph, or switch the background. Only the car mechanically transforms from Frame 1 into Frame 2. The road, scenery, sky, lighting, horizon, and environment remain continuous and physically consistent for the entire shot."
+}
