@@ -1,0 +1,215 @@
+{
+  "master_prompt_id": "highway_rebackground_master_v3",
+  "title": "Highway Re-Background — JSON Master Prompt (v3, JSON-output edition)",
+  "created": "2026-10-08",
+  "language": "en",
+  "usage": [
+    "Step 1: Open a new chat in ChatGPT / Gemini.",
+    "Step 2: Attach the reference photo (highway shot taken from a moving car).",
+    "Step 3: Paste this ENTIRE JSON as your message.",
+    "Step 4: The AI shows 20 highway types and asks you to pick one.",
+    "Step 5: Reply with one number (1-20).",
+    "Step 6: You receive a JSON PROMPT for that road type (generation-ready) AND the generated image from it, with the SAME angle and composition as your reference — only the background changed.",
+    "Note: If you want the JSON prompt only and no image, add the line: JSON only, do not generate an image."
+  ],
+  "directive": "I am attaching a reference photo. Treat this entire JSON as your operating instructions. Read every field before you write anything. Then execute the workflow EXACTLY, phase by phase. Generating an image before Phase 2 is complete is a failure of this instruction.",
+  "phase_protocol": "PHASE 1 Analyse (silent) -> PHASE 2 Ask (present 20 highway types, wait for my number) -> PHASE 3 On my selection: FIRST output a filled JSON prompt object for the selected road type (schema: selected_output_schema, example: example_selected_json_output), THEN generate ONE image from that JSON, keeping the exact angle, composition and motion blur of the reference.",
+
+  "reference_decode": {
+    "shot_type": "handheld phone photo taken from a moving car, bright daylight, clear sky",
+    "aspect_ratio": "portrait, ratio ~9:16",
+    "camera_position": "low viewpoint about 1.2-1.5 m above the road surface, positioned on the carriageway, aimed diagonally forward-left across the road",
+    "horizon_line": "tree line and guardrail band sit just above the middle of the frame, roughly 40-55% from the top",
+    "vanishing_point": "slightly LEFT of centre on the horizon",
+    "road_coverage": "asphalt fills the bottom ~45% of the frame and recedes diagonally from the bottom edge to the vanishing point",
+    "anchor_geometry": "a solid white edge line runs from the lower-left toward the horizon; a silver W-beam metal guardrail runs parallel just above it; a dashed white lane line enters from the bottom-right corner",
+    "sky": "roughly the top 40%; deep blue at the top-left (#529cd1) fading to pale cyan / near-white haze at the horizon (#a9cce7)",
+    "midground": "summer-green tree line, distance-hazed and desaturated olive (#475127 to #66755a); narrow sun-bleached grass verge strip (#938d6f to #9e967b)",
+    "asphalt_tone": "warm brown-grey, lighter #9a9080 near the horizon and darker #6e635d in the foreground",
+    "motion": "strong forward-motion blur; radial / directional streaking on the asphalt strongest in the foreground; slight horizontal smear on the roadside vegetation; fast-driving feel",
+    "light": "high daylight sun slightly behind-left of the camera (late-morning look); road fully lit; no long cast shadows across the road",
+    "grade": "realistic phone-camera look, mild HDR, mild saturation, subtle grain; an honest snapshot, not a glossy advertisement, no heavy filter"
+  },
+
+  "locked_attributes": {
+    "aspect_ratio": "9:16 portrait (1080x1920)",
+    "camera": "low viewpoint ~1.2-1.5 m above the road, on the carriageway, aimed diagonally forward-left",
+    "framing": "sky top ~40%, background band around the middle, road bottom ~45%",
+    "horizon": "just above the middle of the frame",
+    "vanishing_point": "slightly left of centre",
+    "anchor_geometry": "solid white edge line lower-left, silver W-beam guardrail parallel above it, dashed white lane line entering from bottom-right",
+    "motion": "strong forward-motion blur on the asphalt, mild smear on vegetation",
+    "light_direction": "sun slightly behind-left of camera unless the selected scene requires its own lighting mood",
+    "grade": "photorealistic phone snapshot, mild HDR, subtle grain",
+    "rule": "these MUST remain identical in every generated image and in every JSON prompt you output; only the background / environment changes"
+  },
+
+  "workflow": {
+    "phase_1_analyse": {
+      "action": "Silently study the attached reference and lock every attribute in locked_attributes and reference_decode. Do not output the analysis. Do not generate anything yet."
+    },
+    "phase_2_ask": {
+      "action": "Present the 20 highway types from the highway_types array in this JSON, one per line, exactly numbered 1-20, each line formatted as: <number>. <name> - <scene>",
+      "question": "Which one do you want? Reply with a number (1-20).",
+      "then": "STOP and wait for my reply. Do NOT output any JSON prompt or image yet. Do not skip this step under any circumstance."
+    },
+    "phase_3_on_selection": {
+      "trigger": "When I reply with a number or a name from the list (accept a close match).",
+      "step_1": "Output ONE JSON code block: the generation prompt for the selected road type, built with selected_output_schema, fully filled - no placeholders left, all values concrete. Take the matching scene, light and palette values from the selected entry in highway_types and enrich them with 5-10 extra descriptive words each.",
+      "step_2": "Immediately after the JSON block, generate ONE image by following that JSON prompt literally, keeping every locked attribute from Phase 1; replace ONLY the environment / background.",
+      "step_3": "After the image, output one short line: Saved prompt id: <prompt_id> - nothing else.",
+      "composition_rule": "Any new elements you add (trees, mountains, sea, city, weather) must occupy the same position and scale band as the reference's original background, so the result is indistinguishable from the original photo except for the scene itself.",
+      "physics_rule": "Match the physics of the new scene: asphalt reflections and glare must suit the new light, distance haze must behave correctly, and the forward motion blur must continue over ALL new elements identically."
+    }
+  },
+
+  "selected_output_schema": {
+    "description": "Exact structure of the JSON prompt you must output for the selected road type. Every field is required and must be filled.",
+    "fields": {
+      "prompt_id": "string - highway_rebg_<id>_<type-name-slug>, e.g. highway_rebg_01_coastal",
+      "road_type": "string - the selected highway type name",
+      "aspect_ratio": "string - always 9:16",
+      "resolution": "string - always 1080x1920",
+      "shot": "string - photorealistic phone photo taken from a fast-moving car on a highway, plus day/weather summary",
+      "camera": {
+        "height": "string - about 1.2-1.5 m above the road surface",
+        "position": "string - on the carriageway",
+        "aim": "string - diagonally forward-left across the road",
+        "lens_feel": "string - phone wide lens, slight wide-angle edge stretch"
+      },
+      "composition": {
+        "horizon": "string - just above the middle of the frame",
+        "vanishing_point": "string - slightly left of centre",
+        "bands": {
+          "sky": "string - top ~40%",
+          "background": "string - occupies the same band as the reference tree line (~40-55% from top)",
+          "road": "string - bottom ~45%"
+        },
+        "anchors": "array of 3 strings - solid white edge line from lower-left toward the horizon; silver W-beam guardrail parallel above it; dashed white lane line entering from the bottom-right corner"
+      },
+      "motion": {
+        "type": "string - strong forward-motion blur",
+        "asphalt": "string - radial directional streaks, strongest in the foreground",
+        "vegetation": "string - slight horizontal smear",
+        "feel": "string - fast driving"
+      },
+      "scene": {
+        "background": "string - the selected type's scene, enriched with 5-10 extra descriptive words",
+        "lighting": "string - the selected type's light value from highway_types",
+        "palette": "array of 3-4 hex + name strings, from the selected type's palette value",
+        "weather": "string",
+        "extra_details": "array of 3-5 concrete visual details"
+      },
+      "physics": "string - asphalt reflections/glare match the new light, distance haze behaves correctly, motion blur continues over all new elements",
+      "style_grade": "string - realistic phone-camera look, mild HDR, mild saturation, subtle grain, honest snapshot, no heavy filter",
+      "negative": "array of strings - copy from negative_prompt",
+      "flat_prompt": "string - ONE reusable paragraph version of this same prompt (natural language) that I can paste into Midjourney / SD / Flux"
+    }
+  },
+
+  "example_selected_json_output": {
+    "_comment": "This is ONLY a format example (roads type 1, Coastal). Output your own fully filled JSON in this exact structure for whichever type I pick.",
+    "prompt_id": "highway_rebg_01_coastal",
+    "road_type": "Coastal",
+    "aspect_ratio": "9:16",
+    "resolution": "1080x1920",
+    "shot": "photorealistic phone photo taken from a fast-moving car on a coastal highway, bright clear daylight",
+    "camera": {
+      "height": "about 1.3 m above the road surface",
+      "position": "on the carriageway",
+      "aim": "diagonally forward-left across the road",
+      "lens_feel": "phone wide lens, slight wide-angle edge stretch"
+    },
+    "composition": {
+      "horizon": "just above the middle of the frame",
+      "vanishing_point": "slightly left of centre",
+      "bands": {
+        "sky": "top ~40%",
+        "background": "turquoise sea and low shoreline occupy the same band as the reference tree line, ~40-55% from the top",
+        "road": "bottom ~45%"
+      },
+      "anchors": [
+        "solid white edge line running from the lower-left toward the horizon",
+        "silver W-beam metal guardrail parallel just above it",
+        "dashed white lane line entering from the bottom-right corner"
+      ]
+    },
+    "motion": {
+      "type": "strong forward-motion blur",
+      "asphalt": "radial directional streaks on the warm grey asphalt, strongest in the foreground",
+      "vegetation": "slight horizontal smear on the roadside dune grass",
+      "feel": "fast driving"
+    },
+    "scene": {
+      "background": "turquoise sea beside the road, low rocky shoreline, pale sand, salt haze, thin band of dune grass between road and water",
+      "lighting": "bright white midday sun slightly behind-left of camera, high-contrast glare off the water",
+      "palette": ["#2fb3c9 turquoise sea", "#e8e2d2 pale sand haze", "#529cd1 sky blue"],
+      "weather": "clear and sunny, slight salt haze at the horizon",
+      "extra_details": ["sun sparkle on the water", "salt haze softening the horizon line", "sun-bleached dune grass on the verge"]
+    },
+    "physics": "asphalt reflections and glare match bright coastal daylight; distance haze fades the sea into pale cyan; forward motion blur continues over the sea, shoreline and verge identically",
+    "style_grade": "realistic phone-camera look, mild HDR, mild saturation, subtle grain, honest snapshot, no heavy filter",
+    "negative": ["wrong camera angle", "top-down view", "high aerial view", "vanishing point right of centre", "road filling less than 40% of frame", "static clean studio shot", "no motion blur", "illustration", "cartoon", "3d render", "text", "watermark", "logo", "people", "other vehicles"],
+    "flat_prompt": "Photorealistic 9:16 phone photo from a fast-moving car on a coastal highway; low camera about 1.3 m above the road aimed diagonally forward-left; horizon just above middle; road fills bottom 45% receding to a vanishing point left of centre; solid white edge line from lower-left, silver W-beam guardrail parallel above it, dashed white lane line entering bottom-right; turquoise sea and low rocky shoreline where the reference tree line sits, salt haze, dune grass verge; bright midday sun slightly behind-left with glare off the water; strong forward-motion blur streaking the warm grey asphalt; honest phone-camera grade, mild HDR, subtle grain; no vehicles, no people, no text"
+  },
+
+  "highway_types": [
+    { "id": 1,  "name": "Coastal",                 "scene": "turquoise sea beside the road, salt haze, bright white sunlight, low rocky shoreline", "light": "bright white midday sun slightly behind-left of camera, high-contrast glare off the water", "palette": ["#2fb3c9 turquoise sea", "#e8e2d2 pale sand haze", "#529cd1 sky blue"] },
+    { "id": 2,  "name": "Desert",                  "scene": "open sand dunes, heat shimmer, bleached road, sparse dry shrubs, endless pale sky", "light": "harsh high midday sun, heat shimmer, bleached highlights", "palette": ["#d9c49a sand", "#f0e6cf pale sky haze", "#8a7a5c dry shrub"] },
+    { "id": 3,  "name": "Mountain",                "scene": "tall alpine ridges with snow caps, deep valley, crisp thin air, conifer slopes", "light": "clear cool sunlight, crisp shadows, thin blue haze on distant ridges", "palette": ["#7fa8c9 ridge blue", "#e8eef2 snow white", "#3f5d3a conifer green"] },
+    { "id": 4,  "name": "Urban Expressway",        "scene": "city skyline and glass towers, overhead signs and gantries, streetlights along the median", "light": "bright daylight, mild city haze, glassy tower reflections", "palette": ["#9fb4c4 concrete grey", "#6f8fa8 glass blue", "#c9c2b4 concrete tower"] },
+    { "id": 5,  "name": "Forest Road",             "scene": "dense tall trees crowding both sides, dappled sunlight, deep green canopy", "light": "dappled sunlight through the canopy, warm green highlights", "palette": ["#2e4a26 deep green", "#8fae5a lit leaf", "#6b5c46 bark brown"] },
+    { "id": 6,  "name": "Snowy Pass",              "scene": "snow banks along the verge, icy shoulder, grey-white overcast light, distant white peaks", "light": "flat overcast grey-white light, soft shadowless snow", "palette": ["#e8edf1 snow", "#b9c4cc ice grey", "#8d99a3 cloud shadow"] },
+    { "id": 7,  "name": "Countryside Lane",        "scene": "green paddy or farm fields, wooden fence, scattered trees, soft morning light", "light": "soft morning light, gentle warm tone, low contrast", "palette": ["#7da24f paddy green", "#dbc79a dry grass", "#a8c2d8 morning sky"] },
+    { "id": 8,  "name": "Jungle Trail",            "scene": "tropical palms and dense undergrowth, humid haze, vivid saturated greens", "light": "humid diffused light, vivid saturated greens, faint sun shafts", "palette": ["#1f5c33 palm green", "#6fae4a lit leaf", "#d8e3c9 humid haze"] },
+    { "id": 9,  "name": "Bridge Crossing",         "scene": "long bridge with railings and cables, water far below, open horizon and sky", "light": "open bright daylight, water glare below, hazy horizon", "palette": ["#7f8f9c steel grey", "#4f7d99 water blue", "#c7d3da haze"] },
+    { "id": 10, "name": "Industrial Road",         "scene": "factory buildings, silos and pipelines, utility poles, dull hazy overcast sky", "light": "dull hazy overcast, flat light, muted tones", "palette": ["#8d8c86 concrete", "#6e7076 metal grey", "#b6b4ad hazy sky"] },
+    { "id": 11, "name": "Night Neon City",         "scene": "neon signs and lit towers, glowing wet asphalt, deep blue night sky, lamp glow", "light": "night, neon signs and streetlights, glowing reflections on the asphalt", "palette": ["#12203a night blue", "#ff4fa0 neon magenta", "#33e0ff neon cyan"] },
+    { "id": 12, "name": "Rain-Soaked Wet Road",    "scene": "heavy rain, glossy reflective asphalt, spray mist, low grey clouds, wet sheen", "light": "heavy rain, low grey clouds, wet asphalt with mirror-like reflections", "palette": ["#5c6a72 wet asphalt", "#9aa7ad rain mist", "#42505a cloud shadow"] },
+    { "id": 13, "name": "Golden Hour Countryside", "scene": "warm low sunlight, long soft shadows, golden fields, glowing dusty air", "light": "low warm golden-hour sun, long soft shadows, dust in the air", "palette": ["#e0a44f golden", "#8f6b3a warm earth", "#f2d9a6 bright sky"] },
+    { "id": 14, "name": "Tunnel Exit",             "scene": "tunnel mouth ahead, dark arch, bright daylight bursting at the exit, dry clean asphalt", "light": "dark tunnel interior, bright daylight blowing out at the exit arch", "palette": ["#2a2c2e tunnel dark", "#f2efe6 exit glare", "#7a7d80 concrete"] },
+    { "id": 15, "name": "Sunset Beach Coast",      "scene": "orange-pink sunset sky, ocean on one side, palm silhouettes, warm glare", "light": "orange-pink sunset glow, long horizon glare, warm rim light", "palette": ["#f28a4b sunset orange", "#d95a76 pink", "#4a3b6b dusk violet"] },
+    { "id": 16, "name": "Tea Country Highland",    "scene": "green tea terraces on rolling hills, misty cool air, distant blue ridges", "light": "cool misty morning light, soft haze between ridge layers", "palette": ["#4e7a3a tea green", "#a9bed0 mist blue", "#2f5d46 hill shadow"] },
+    { "id": 17, "name": "Autumn Forest Road",      "scene": "orange and red autumn foliage, leaves on the verge, soft overcast daylight", "light": "soft overcast daylight, warm diffuse glow through the leaves", "palette": ["#c1592b autumn orange", "#d9a441 amber", "#6b4a2f trunk brown"] },
+    { "id": 18, "name": "Spring Sakura Avenue",    "scene": "pink cherry blossom trees lining the road, petals drifting, soft pastel light", "light": "soft pastel daylight, gentle glow, light petals in the air", "palette": ["#f3b8c8 blossom pink", "#e9e2e6 pale grey", "#8fb08a young green"] },
+    { "id": 19, "name": "Foggy Pine Forest",       "scene": "thick low fog between dark pine trunks, muted light, faint hazy horizon", "light": "thick low fog, muted diffused light, faint sun disc", "palette": ["#7f8a84 fog grey", "#2f4034 pine dark", "#aab3ad pale mist"] },
+    { "id": 20, "name": "Starry Night Desert",     "scene": "black star-filled sky, milky way, cool moonlit dunes, faint headlight glow", "light": "moonlit night, cool blue tone, faint headlight glow on the road", "palette": ["#0a1226 night sky", "#39506e moonlit sand", "#c8d6e8 moon glow"] }
+  ],
+
+  "final_prompt_template": "Photorealistic 9:16 portrait phone photo taken from a fast-moving car on a highway. Camera: low viewpoint about 1.3 m above the road, positioned on the carriageway, aimed diagonally forward-left across the road. Composition: horizon just above the middle of the frame; road surface fills the bottom ~45% and recedes diagonally to a vanishing point slightly left of centre; a solid white edge line runs from the lower-left toward the horizon; a silver W-beam metal guardrail runs parallel just above it; a dashed white lane line enters from the bottom-right corner. Motion: strong forward-motion blur, radial directional streaking on the warm grey asphalt strongest in the foreground, slight horizontal smear on roadside vegetation; fast-driving feel. Grade: honest phone-camera look, mild HDR, mild saturation, subtle grain. Scene / background: {{SCENE}}. Lighting: {{SCENE_LIGHT}}. Colour mood: {{SCENE_COLORS}}. Physics: asphalt reflections, glare and distance haze must match the new scene, and the motion blur must continue over all new elements. No vehicles, no people, no text, no watermark, no logos. Aspect ratio 9:16 (1080x1920).",
+
+  "output_rules": [
+    "Phase 3 step 1: output the filled JSON prompt object in a code block (no placeholders left).",
+    "Phase 3 step 2: generate exactly ONE image from that JSON prompt.",
+    "Aspect ratio must be 9:16 (1080x1920). If not possible, request portrait and crop to 9:16.",
+    "Photorealistic only; no illustration, anime, painting, 3D render or CGI look.",
+    "No text, no watermark, no logo, no people, no visible other vehicles (unless I ask).",
+    "If I say 'JSON only', output the JSON prompt and skip the image.",
+    "After the image, print only one line: Saved prompt id: <prompt_id>."
+  ],
+
+  "negative_prompt": [
+    "wrong camera angle", "top-down view", "high aerial view", "horizon centred differently",
+    "vanishing point right of centre", "road filling less than 40% of frame", "static clean studio shot",
+    "no motion blur", "illustration", "cartoon", "anime", "3d render", "painting", "heavy Instagram filter",
+    "text", "watermark", "logo", "people", "other vehicles", "glossy advertisement look"
+  ],
+
+  "hard_rules": [
+    "Never skip Phase 2. Never output a JSON prompt or generate anything before I reply with a number.",
+    "The JSON prompt must always keep every locked attribute: same camera angle, horizon height, vanishing point position, road proportion, anchor geometry and motion-blur direction. Only scene, lighting and palette change.",
+    "Never change camera angle, horizon height, vanishing point position, road proportion, or motion-blur direction in the generated image either.",
+    "If the chosen type conflicts with the reference light (e.g. night, rain, fog), keep camera, composition and motion EXACTLY the same and change only the lighting mood to suit the scene.",
+    "If I reply with a name instead of a number, treat it as the matching entry.",
+    "If I reply with something not on the list, ask me once to pick from 1-20."
+  ],
+
+  "troubleshooting": [
+    { "problem": "AI generated an image before asking", "send": "Stop. Do not generate yet. First show me the 20 numbered highway types and wait for my number." },
+    { "problem": "AI gave a paragraph instead of JSON", "send": "Output the selected road type prompt as a JSON code block only, using the selected_output_schema structure, fully filled with no placeholders, then generate the image from it." },
+    { "problem": "Composition changed", "send": "The composition is wrong. Lock: horizon just above middle, vanishing point LEFT of centre, road = bottom ~45% of frame, camera low at 1.3 m aimed diagonally forward-left, forward motion blur on the asphalt. Redo with the exact same composition." },
+    { "problem": "No motion blur / studio look", "send": "Keep the strong forward-motion blur - the foreground asphalt must be streaked and smeared. This is a moving-car snapshot, not a still studio shot." },
+    { "problem": "Wrong aspect ratio", "send": "Wrong aspect ratio. Output must be 9:16 portrait (1080x1920)." },
+    { "problem": "Background pasted on top like a collage", "send": "Do not paste the background on top. Rebuild the whole photo as one seamless scene: same camera, same geometry, the new environment must sit in the same band and scale as the original background." }
+  ]
+}
